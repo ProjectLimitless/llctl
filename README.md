@@ -1,4 +1,4 @@
-# Project Limitless command line interface a.k.a Limitless Control
+# Project Limitless command line interface
 
 `llctl` is a command line interface for running commands against a Project
 Limitless installation. It is available on Windows, Linux and macOS.
