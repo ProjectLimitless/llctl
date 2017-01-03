@@ -14,5 +14,6 @@ package main
 import "github.com/ProjectLimitless/llctl/cmd"
 
 func main() {
-	cmd.Execute()
+	buildVersion := "0.0.0.1"
+	cmd.Execute(buildVersion)
 }

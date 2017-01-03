@@ -17,21 +17,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// pingCmd represents the ping command
-var pingCmd = &cobra.Command{
-	Use:   "ping",
-	Short: "Tests the connection to a Project Limitless instance",
-	Long: `Ping creates a connection to a Project Limitless instance
-and attempts to authenticate to it.
-
-If connection and authentication succeeds, 'Pong!' is returned, otherwise
-the error will be displayed.`,
+// versionCmd represents the version command
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Displays the version of 'llctl'",
+	Long:  `Displays the version of the 'llctl' command`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("ping called")
+		fmt.Println(fmt.Sprintf("%s %s", RootCmd.Use, buildVersion))
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(pingCmd)
+	RootCmd.AddCommand(versionCmd)
 }
