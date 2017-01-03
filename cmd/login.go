@@ -14,11 +14,12 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/ProjectLimitless/llctl/swagger"
+	"github.com/howeyc/gopass"
 	"github.com/spf13/cobra"
 )
 
 var username string
-var password string
 
 // loginCmd represents the login command
 var loginCmd = &cobra.Command{
@@ -30,19 +31,45 @@ as specified in the configuration file.
 If login succeeds the access token is stored and used for all calls, including
 calls that require authentication.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("login called for username: " + username)
+		// TODO: find a better way to handle required flags
+		if username == "" {
+			fmt.Println("The username flag is required for login")
+			return
+		}
+
+		fmt.Printf("Password: ")
+		// Windows users might not be used to not see any feedback when
+		// entering a password like 'GetPasswd'. Rather using *** masked input.
+		passwordBytes, err := gopass.GetPasswdMasked()
+		if err != nil {
+			fmt.Println("Unable to read password:", err.Error())
+			return
+		}
+		password := string(passwordBytes)
+
+		_ = password
+
+		api := swagger.NewDefaultApiWithBasePath("http://127.0.0.1:8080")
+		response, err := api.ApiLoginPost(swagger.LoginCredentials{
+			Username: username,
+			Password: password,
+		})
+
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println(string(response.Payload))
+
+		// TODO: Add responses to swagger definition
+		// to read more data from the api
+		// on login, save the token in .llcache?
 	},
 }
 
 func init() {
 	RootCmd.AddCommand(loginCmd)
 
-	loginCmd.PersistentFlags().StringVar(&username, "username", "", "The user's username")
-	loginCmd.PersistentFlags().StringVar(&password, "password", "", "The user's password")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// loginCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	loginCmd.PersistentFlags().StringVarP(&username, "username", "u", "", "The user's username")
+	loginCmd.MarkFlagRequired("username")
 
 }

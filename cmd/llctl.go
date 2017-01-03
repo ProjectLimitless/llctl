@@ -13,7 +13,6 @@ package cmd
 
 import (
 	"fmt"
-	"net"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -21,7 +20,7 @@ import (
 )
 
 var configFile string
-var host net.IP
+var host string
 var port uint32
 
 // buildVersion is the version of the 'llctl'
@@ -54,32 +53,29 @@ func Execute(version string) {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports Persistent Flags, which, if defined here,
-	// will be global for your application.
-
-	RootCmd.PersistentFlags().StringVar(&configFile, "config", "./.llctl.yaml", "config file")
-	RootCmd.PersistentFlags().IPVar(&host, "host", net.ParseIP("127.0.0.1"), "The Project Limitless host to connect to")
+	RootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "./.llctl.yaml", "config file")
+	RootCmd.PersistentFlags().StringVar(&host, "host", "127.0.0.1", "The Project Limitless host to connect to")
 	RootCmd.PersistentFlags().Uint32Var(&port, "port", 8762, "The Project Limitless port to connect to")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	//RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if configFile != "" { // enable ability to specify config file via flag
+	// enable ability to specify config file via flag
+	if configFile != "" {
 		viper.SetConfigFile(configFile)
 	}
 
-	viper.SetConfigName(".llctl") // name of config file (without extension)
-	viper.AddConfigPath("$HOME")  // adding home directory as first search path
-	viper.AutomaticEnv()          // read in environment variables that match
+	// name of config file (without extension)
+	viper.SetConfigName(".llctl")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("$HOME")
+	viper.AutomaticEnv()
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+
+	port = uint32(viper.GetInt("api.port"))
+	host = viper.GetString("api.host")
 }

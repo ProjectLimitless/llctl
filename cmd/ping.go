@@ -29,6 +29,8 @@ the error will be displayed.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: Work your own magic here
 		fmt.Println("ping called")
+		fmt.Println(host)
+		fmt.Println(port)
 	},
 }
 
