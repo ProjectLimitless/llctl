@@ -22,9 +22,13 @@
 
 package swagger
 
-type LoginCredentials struct {
+type Exception struct {
 
-	Username string `json:"username,omitempty"`
+	Type_ string `json:"type,omitempty"`
 
-	Password string `json:"password,omitempty"`
+	Message string `json:"message,omitempty"`
+
+	StackTrace string `json:"stackTrace,omitempty"`
+
+	Target string `json:"target,omitempty"`
 }

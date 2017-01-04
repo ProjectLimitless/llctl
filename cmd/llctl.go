@@ -12,16 +12,27 @@
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 
+	"github.com/ProjectLimitless/llctl/swagger"
+	logging "github.com/op/go-logging"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var configFile string
-var host string
-var port uint32
+var apiEndpoint string
+var api *swagger.DefaultApi
+
+var isDebug bool
+
+var logger *logging.Logger
+var cacheFile string
+var user swagger.LoginResponse
 
 // buildVersion is the version of the 'llctl'
 // tool which is updated by automated builds.
@@ -54,18 +65,19 @@ func Execute(version string) {
 func init() {
 	cobra.OnInitialize(initConfig)
 	RootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "./.llctl.yaml", "config file")
-	RootCmd.PersistentFlags().StringVar(&host, "host", "127.0.0.1", "The Project Limitless host to connect to")
-	RootCmd.PersistentFlags().Uint32Var(&port, "port", 8762, "The Project Limitless port to connect to")
+	RootCmd.PersistentFlags().StringVar(&apiEndpoint, "endpoint", "http://127.0.0.1:8762/api", "The Project Limitless builtin API endpoint")
+	RootCmd.PersistentFlags().BoolVarP(&isDebug, "debug", "d", false, "Enable debug output")
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	// enable ability to specify config file via flag
+	cacheFile = "./.llcache"
+	// Enable ability to specify config file via flag
 	if configFile != "" {
 		viper.SetConfigFile(configFile)
 	}
 
-	// name of config file (without extension)
+	// Name of config file (without extension)
 	viper.SetConfigName(".llctl")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("$HOME")
@@ -75,7 +87,74 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+	if viper.IsSet("debug") {
+		isDebug = viper.GetBool("debug")
+	}
+	if viper.IsSet("api.endpoint") {
+		apiEndpoint = viper.GetString("api.endpoint")
+	}
 
-	port = uint32(viper.GetInt("api.port"))
-	host = viper.GetString("api.host")
+	// Setup logging with log level
+	logger = logging.MustGetLogger("llctl")
+	format := logging.MustStringFormatter(`%{color}%{time:15:04:05} %{level:.5s} > %{message}%{color:reset}`)
+	stdout := logging.NewLogBackend(os.Stdout, "", 0)
+	stdoutFormatter := logging.NewBackendFormatter(stdout, format)
+	stdoutLogLevel := logging.AddModuleLevel(stdoutFormatter)
+
+	if isDebug {
+		stdoutLogLevel.SetLevel(logging.DEBUG, "")
+	} else {
+		stdoutLogLevel.SetLevel(logging.INFO, "")
+	}
+	logging.SetBackend(stdoutLogLevel)
+
+	logger.Debug("Debugging is enabled")
+
+	// Setup Swagger generated API code. Spec available at
+	// https://app.swaggerhub.com/api/projectlimitless/builtin-api
+	api = swagger.NewDefaultApiWithBasePath(apiEndpoint)
+	api.Configuration.Debug = isDebug
+
+	// Read cached user data
+	llcache, err := ioutil.ReadFile(cacheFile)
+	if err != nil {
+		logger.Debugf("Limitless cache file '%s' is invalid or doesn't exist", cacheFile)
+	} else {
+		err = json.Unmarshal(llcache, &user)
+		if err != nil {
+			_ = os.Remove(cacheFile)
+			logger.Debugf("Limitless cache file '%s' is invalid. Removed.", cacheFile)
+		} else {
+			api.Configuration.AccessToken = user.AccessToken
+		}
+	}
+}
+
+// isFailedStatus checks is a given HTTP status code is
+// not a success status. 2XX statuses are considered success.
+func isFailedStatus(statusCode int) bool {
+	if statusCode >= 200 && statusCode < 300 {
+		return false
+	}
+	return true
+}
+
+// handleErrorResponse defines a uniform way of handling
+// error responses from the API
+func handleErrorResponse(response *swagger.APIResponse) {
+	logger.Errorf("Received Status '%d' from the API: %s", response.StatusCode, response.Status)
+	if len(response.Payload) > 2 {
+		fmt.Println(prettyJSON(response.Payload))
+	}
+}
+
+// prettyJSON format JSON to be more readable
+func prettyJSON(data []byte) string {
+	var prettyJSON bytes.Buffer
+	err := json.Indent(&prettyJSON, data, "", "\t")
+	if err != nil {
+		logger.Criticalf("Unable to parse JSON: %s", err.Error())
+		return ""
+	}
+	return string(prettyJSON.Bytes())
 }

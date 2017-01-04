@@ -22,9 +22,13 @@
 
 package swagger
 
-type LoginCredentials struct {
+type ApiRoute struct {
 
-	Username string `json:"username,omitempty"`
+	Path string `json:"path,omitempty"`
 
-	Password string `json:"password,omitempty"`
+	Method string `json:"method,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	RequiresAuthentication bool `json:"requiresAuthentication,omitempty"`
 }

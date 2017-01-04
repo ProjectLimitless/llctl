@@ -11,27 +11,20 @@
 
 package cmd
 
-import (
-	"fmt"
+import "github.com/spf13/cobra"
 
-	"github.com/spf13/cobra"
-)
+// getCmd represents the get command
+var getCmd = &cobra.Command{
+	Use:   "get",
+	Short: "Gets API objects",
+	Long: `Get returns API objects and displays them as a list.
 
-// pingCmd represents the ping command
-var pingCmd = &cobra.Command{
-	Use:   "ping",
-	Short: "Tests the connection to a Project Limitless instance",
-	Long: `Ping creates a connection to a Project Limitless instance
-and attempts to authenticate to it.
-
-If connection and authentication succeeds, 'Pong!' is returned, otherwise
-the error will be displayed.`,
+The command following 'get' specifies the object to fetch.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("ping called")
+		logger.Errorf("You need to specify an API object to get. See `%s --help`", RootCmd.Use)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(pingCmd)
+	RootCmd.AddCommand(getCmd)
 }

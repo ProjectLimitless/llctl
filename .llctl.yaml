@@ -1,3 +1,4 @@
+debug: true
 api:
-    host: 127.0.0.1
-    port: 8762
+    #endpoint: http://127.0.0.1:8762/api
+    endpoint: http://127.0.0.1:8080/api

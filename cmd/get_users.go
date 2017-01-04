@@ -17,21 +17,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// pingCmd represents the ping command
-var pingCmd = &cobra.Command{
-	Use:   "ping",
-	Short: "Tests the connection to a Project Limitless instance",
-	Long: `Ping creates a connection to a Project Limitless instance
-and attempts to authenticate to it.
-
-If connection and authentication succeeds, 'Pong!' is returned, otherwise
-the error will be displayed.`,
+// usersCmd represents the users command
+var usersCmd = &cobra.Command{
+	Use:   "users",
+	Short: "Returns a list of registered users",
+	Long: `Returns a list of registered users on this
+Project Limitless installation`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: Work your own magic here
-		fmt.Println("ping called")
+		fmt.Println("users called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(pingCmd)
+	getCmd.AddCommand(usersCmd)
 }

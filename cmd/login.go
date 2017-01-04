@@ -12,7 +12,9 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 
 	"github.com/ProjectLimitless/llctl/swagger"
 	"github.com/howeyc/gopass"
@@ -33,7 +35,7 @@ calls that require authentication.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: find a better way to handle required flags
 		if username == "" {
-			fmt.Println("The username flag is required for login")
+			logger.Error("A username is required for login")
 			return
 		}
 
@@ -42,27 +44,47 @@ calls that require authentication.`,
 		// entering a password like 'GetPasswd'. Rather using *** masked input.
 		passwordBytes, err := gopass.GetPasswdMasked()
 		if err != nil {
-			fmt.Println("Unable to read password:", err.Error())
+			logger.Errorf("Unable to read password: %s", err.Error())
 			return
 		}
 		password := string(passwordBytes)
 
-		_ = password
-
-		api := swagger.NewDefaultApiWithBasePath("http://127.0.0.1:8080")
-		response, err := api.ApiLoginPost(swagger.LoginCredentials{
+		loginResponse, response, err := api.LoginPost(swagger.LoginCredentials{
 			Username: username,
 			Password: password,
 		})
-
 		if err != nil {
-			fmt.Println(err.Error())
+			logger.Errorf("Unable to call API: %s", err.Error())
 		}
-		fmt.Println(string(response.Payload))
 
-		// TODO: Add responses to swagger definition
-		// to read more data from the api
-		// on login, save the token in .llcache?
+		if isFailedStatus(response.StatusCode) {
+			logger.Critical("Login Failed. See details")
+			handleErrorResponse(response)
+			return
+		}
+
+		if isDebug {
+			fmt.Println(prettyJSON(response.Payload))
+		}
+
+		// Save the loginResult in .llcache
+		llcache, err := json.Marshal(&loginResponse)
+		if err != nil {
+			logger.Critical("Unable to marshal LoginResponse: %s", err.Error())
+			return
+		}
+		err = ioutil.WriteFile(cacheFile, llcache, 0644)
+		if err != nil {
+			logger.Critical("Unable to write login result to '%s': %s", cacheFile, err.Error())
+			return
+		}
+
+		logger.Info("Login successful. You may now call authenticated routes.")
+		logger.Infof("Authenticated as %s %s (%s)",
+			loginResponse.Name,
+			loginResponse.Surname,
+			loginResponse.UserName,
+		)
 	},
 }
 

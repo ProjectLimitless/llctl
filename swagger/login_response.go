@@ -22,9 +22,17 @@
 
 package swagger
 
-type LoginCredentials struct {
+type LoginResponse struct {
 
-	Username string `json:"username,omitempty"`
+	Claims []string `json:"claims,omitempty"`
 
-	Password string `json:"password,omitempty"`
+	UserName string `json:"userName,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Surname string `json:"surname,omitempty"`
+
+	AccessToken string `json:"accessToken,omitempty"`
+
+	IsAuthenticated bool `json:"isAuthenticated,omitempty"`
 }
