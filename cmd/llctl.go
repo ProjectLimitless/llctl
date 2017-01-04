@@ -142,9 +142,12 @@ func isFailedStatus(statusCode int) bool {
 // handleErrorResponse defines a uniform way of handling
 // error responses from the API
 func handleErrorResponse(response *swagger.APIResponse) {
-	logger.Errorf("Received Status '%d' from the API: %s", response.StatusCode, response.Status)
 	if len(response.Payload) > 2 {
 		fmt.Println(prettyJSON(response.Payload))
+	}
+	logger.Errorf("Received Status '%d' from the API: %s", response.StatusCode, response.Status)
+	if response.StatusCode == 401 {
+		logger.Warningf("You need to log in to access this route. See '%s %s --help'", RootCmd.Use, "login")
 	}
 }
 

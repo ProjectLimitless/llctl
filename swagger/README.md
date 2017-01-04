@@ -21,6 +21,7 @@ All URIs are relative to *http://localhost/api*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**AdminModulesGet**](docs/DefaultApi.md#adminmodulesget) | **Get** /admin/modules | Returns a list of loaded modules.
 *DefaultApi* | [**AdminRoutesGet**](docs/DefaultApi.md#adminroutesget) | **Get** /admin/routes | Returns a list of available API routes.
 *DefaultApi* | [**LoginPost**](docs/DefaultApi.md#loginpost) | **Post** /login | Logs a user in
 
@@ -29,6 +30,7 @@ Class | Method | HTTP request | Description
 
  - [ApiRoute](docs/ApiRoute.md)
  - [Exception](docs/Exception.md)
+ - [IModule](docs/IModule.md)
  - [LoginCredentials](docs/LoginCredentials.md)
  - [LoginResponse](docs/LoginResponse.md)
 

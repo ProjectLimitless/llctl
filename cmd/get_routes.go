@@ -19,6 +19,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var wide bool
+
 // routesCmd represents the routes command
 var routesCmd = &cobra.Command{
 	Use:   "routes",

@@ -13,6 +13,8 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"text/tabwriter"
 
 	"github.com/spf13/cobra"
 )
@@ -24,11 +26,38 @@ var modulesCmd = &cobra.Command{
 	Long: `Returns a list of loaded moodules along with the description
 and version`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("modules called")
+		modules, response, err := api.AdminModulesGet()
+		if err != nil {
+			logger.Errorf("Unable to call API: %s", err.Error())
+		}
+		if isFailedStatus(response.StatusCode) {
+			handleErrorResponse(response)
+			return
+		}
+
+		if isDebug {
+			fmt.Println(prettyJSON(response.Payload))
+		}
+
+		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+		if wide {
+			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s\t%s", "Type", "Title", "Description", "Version", "Author"))
+			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s\t%s", "----", "-----", "-----------", "-------", "------"))
+			for _, module := range modules {
+				fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s\t%s", module.Type_, module.Title, module.Description, module.Version, module.Author))
+			}
+		} else {
+			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s", "Type", "Title", "Version", "Author"))
+			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s", "----", "-----", "-------", "------"))
+			for _, module := range modules {
+				fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s", module.Type_, module.Title, module.Version, module.Author))
+			}
+		}
+		tw.Flush()
 	},
 }
 
 func init() {
 	getCmd.AddCommand(modulesCmd)
+	modulesCmd.PersistentFlags().BoolVarP(&wide, "wide", "w", false, "Print more details")
 }

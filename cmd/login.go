@@ -58,8 +58,8 @@ calls that require authentication.`,
 		}
 
 		if isFailedStatus(response.StatusCode) {
-			logger.Critical("Login Failed. See details")
 			handleErrorResponse(response)
+			logger.Critical("Login Failed. Incorrect username or password.")
 			return
 		}
 
