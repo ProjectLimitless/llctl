@@ -26,15 +26,17 @@ var routesCmd = &cobra.Command{
 	Long: `Returns a list of available API routes along with the path, description,
 HTTP method and a boolean specifying if authentication is required for the path`,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		apiRoutes, response, err := api.AdminRoutesGet()
 		if err != nil {
 			logger.Errorf("Unable to call API: %s", err.Error())
-			return
 		}
 		if isFailedStatus(response.StatusCode) {
 			handleErrorResponse(response)
 			return
+		}
+
+		if isDebug {
+			fmt.Println(prettyJSON(response.Payload))
 		}
 
 		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)

@@ -125,7 +125,7 @@ func initConfig() {
 			_ = os.Remove(cacheFile)
 			logger.Debugf("Limitless cache file '%s' is invalid. Removed.", cacheFile)
 		} else {
-			api.Configuration.AccessToken = user.AccessToken
+			api.Configuration.APIKey["Authorization"] = user.AccessToken
 		}
 	}
 }
