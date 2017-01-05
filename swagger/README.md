@@ -23,12 +23,14 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**AdminModulesGet**](docs/DefaultApi.md#adminmodulesget) | **Get** /admin/modules | Returns a list of loaded modules.
 *DefaultApi* | [**AdminRoutesGet**](docs/DefaultApi.md#adminroutesget) | **Get** /admin/routes | Returns a list of available API routes.
+*DefaultApi* | [**AdminUsersGet**](docs/DefaultApi.md#adminusersget) | **Get** /admin/users | Returns a list of users for the installation.
 *DefaultApi* | [**LoginPost**](docs/DefaultApi.md#loginpost) | **Post** /login | Logs a user in
 
 
 ## Documentation For Models
 
  - [ApiRoute](docs/ApiRoute.md)
+ - [BaseUser](docs/BaseUser.md)
  - [Exception](docs/Exception.md)
  - [IModule](docs/IModule.md)
  - [LoginCredentials](docs/LoginCredentials.md)

@@ -41,16 +41,14 @@ and version`,
 
 		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 		if wide {
-			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s\t%s", "Type", "Title", "Description", "Version", "Author"))
-			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s\t%s", "----", "-----", "-----------", "-------", "------"))
+			writeFields(tw, true, "Type", "Title", "Description", "Version", "Author")
 			for _, module := range modules {
-				fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s\t%s", module.Type_, module.Title, module.Description, module.Version, module.Author))
+				writeFields(tw, false, module.Type_, module.Title, module.Description, module.Version, module.Author)
 			}
 		} else {
-			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s", "Type", "Title", "Version", "Author"))
-			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s", "----", "-----", "-------", "------"))
+			writeFields(tw, true, "Type", "Title", "Version", "Author")
 			for _, module := range modules {
-				fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%s", module.Type_, module.Title, module.Version, module.Author))
+				writeFields(tw, false, module.Type_, module.Title, module.Version, module.Author)
 			}
 		}
 		tw.Flush()

@@ -13,6 +13,8 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"text/tabwriter"
 
 	"github.com/spf13/cobra"
 )
@@ -21,14 +23,39 @@ import (
 var usersCmd = &cobra.Command{
 	Use:   "users",
 	Short: "Returns a list of registered users",
-	Long: `Returns a list of registered users on this
+	Long: `Returns a list of registered users for this
 Project Limitless installation`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
-		fmt.Println("users called")
+		users, response, err := api.AdminUsersGet()
+		if err != nil {
+			logger.Errorf("Unable to call API: %s", err.Error())
+		}
+		if isFailedStatus(response.StatusCode) {
+			handleErrorResponse(response)
+			return
+		}
+
+		if isDebug {
+			fmt.Println(prettyJSON(response.Payload))
+		}
+
+		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+		if wide {
+			writeFields(tw, true, "ID", "Username", "First name", "Last name", "Created", "Deleted")
+			for _, user := range users {
+				writeFields(tw, false, fmt.Sprintf("%d", user.ID), user.Username, user.FirstName, user.LastName, user.DateCreated.Format("2006-01-02 15:04:05"), fmt.Sprintf("%v", user.IsDeleted))
+			}
+		} else {
+			writeFields(tw, true, "ID", "Username", "First name", "Last name")
+			for _, user := range users {
+				writeFields(tw, false, fmt.Sprintf("%d", user.ID), user.Username, user.FirstName, user.LastName)
+			}
+		}
+		tw.Flush()
 	},
 }
 
 func init() {
 	getCmd.AddCommand(usersCmd)
+	usersCmd.PersistentFlags().BoolVarP(&wide, "wide", "w", false, "Print more details")
 }

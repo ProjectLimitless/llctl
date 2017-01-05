@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AdminModulesGet**](DefaultApi.md#AdminModulesGet) | **Get** /admin/modules | Returns a list of loaded modules.
 [**AdminRoutesGet**](DefaultApi.md#AdminRoutesGet) | **Get** /admin/routes | Returns a list of available API routes.
+[**AdminUsersGet**](DefaultApi.md#AdminUsersGet) | **Get** /admin/users | Returns a list of users for the installation.
 [**LoginPost**](DefaultApi.md#LoginPost) | **Post** /login | Logs a user in
 
 
@@ -45,6 +46,30 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**[]ApiRoute**](APIRoute.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AdminUsersGet**
+> []BaseUser AdminUsersGet()
+
+Returns a list of users for the installation.
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**[]BaseUser**](BaseUser.md)
 
 ### Authorization
 

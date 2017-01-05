@@ -17,6 +17,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
+	"text/tabwriter"
 
 	"github.com/ProjectLimitless/llctl/swagger"
 	logging "github.com/op/go-logging"
@@ -71,7 +73,10 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	// TODO: Use better discovery of .llcache,
+	// perhaps viper.AddConfigPath can help
 	cacheFile = "./.llcache"
+
 	// Enable ability to specify config file via flag
 	if configFile != "" {
 		viper.SetConfigFile(configFile)
@@ -130,6 +135,8 @@ func initConfig() {
 	}
 }
 
+// TODO: Move helper functions
+
 // isFailedStatus checks is a given HTTP status code is
 // not a success status. 2XX statuses are considered success.
 func isFailedStatus(statusCode int) bool {
@@ -160,4 +167,26 @@ func prettyJSON(data []byte) string {
 		return ""
 	}
 	return string(prettyJSON.Bytes())
+}
+
+// writeFields writes values, tab seperated with optional
+// underlining
+//
+// Name   Surname
+// ----   -------
+func writeFields(tw *tabwriter.Writer, underlineValues bool, values ...string) {
+	fmt.Fprint(tw, strings.Join(values, "\t"))
+	fmt.Fprintln(tw, "")
+	if underlineValues {
+		var splits []string
+		for _, value := range values {
+			underline := ""
+			for i := 0; i < len(value); i++ {
+				underline += "-"
+			}
+			splits = append(splits, underline)
+		}
+		fmt.Fprint(tw, strings.Join(splits, "\t"))
+		fmt.Fprintln(tw, "")
+	}
 }

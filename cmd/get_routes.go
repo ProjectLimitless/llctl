@@ -42,10 +42,9 @@ HTTP method and a boolean specifying if authentication is required for the path`
 		}
 
 		tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-		fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%v", "Method", "Path", "Description", "Authenticated"))
-		fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%v", "------", "----", "-----------", "-------------"))
+		writeFields(tw, true, "Method", "Path", "Description", "Authenticated")
 		for _, route := range apiRoutes {
-			fmt.Fprintln(tw, fmt.Sprintf("%s\t%s\t%s\t%v", route.Method, route.Path, route.Description, route.RequiresAuthentication))
+			writeFields(tw, false, route.Method, route.Path, route.Description, fmt.Sprintf("%v", route.RequiresAuthentication))
 		}
 		tw.Flush()
 	},
