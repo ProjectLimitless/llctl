@@ -22,23 +22,9 @@
 
 package swagger
 
-import (
-	"time"
-)
+type SkillResponseSuccess struct {
 
-type BaseUser struct {
+	UUID string `json:"uUID,omitempty"`
 
-	ID int32 `json:"iD,omitempty"`
-
-	Username string `json:"username,omitempty"`
-
-	Password string `json:"password,omitempty"`
-
-	FirstName string `json:"firstName,omitempty"`
-
-	LastName string `json:"lastName,omitempty"`
-
-	DateCreated time.Time `json:"dateCreated,omitempty"`
-
-	IsDeleted bool `json:"isDeleted,omitempty"`
+	Registered bool `json:"registered,omitempty"`
 }

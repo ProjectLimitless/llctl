@@ -25,6 +25,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**AdminRoutesGet**](docs/DefaultApi.md#adminroutesget) | **Get** /admin/routes | Returns a list of available API routes.
 *DefaultApi* | [**AdminUsersGet**](docs/DefaultApi.md#adminusersget) | **Get** /admin/users | Returns a list of users for the installation.
 *DefaultApi* | [**LoginPost**](docs/DefaultApi.md#loginpost) | **Post** /login | Logs a user in
+*DefaultApi* | [**SkillsGet**](docs/DefaultApi.md#skillsget) | **Get** /skills | Returns a list of registered skills for the installation
+*DefaultApi* | [**SkillsIdDelete**](docs/DefaultApi.md#skillsiddelete) | **Delete** /skills/{id} | Deregister a previously registered skill
+*DefaultApi* | [**SkillsPost**](docs/DefaultApi.md#skillspost) | **Post** /skills | Registers a new skill
 
 
 ## Documentation For Models
@@ -33,8 +36,15 @@ Class | Method | HTTP request | Description
  - [BaseUser](docs/BaseUser.md)
  - [Exception](docs/Exception.md)
  - [IModule](docs/IModule.md)
+ - [Intent](docs/Intent.md)
  - [LoginCredentials](docs/LoginCredentials.md)
  - [LoginResponse](docs/LoginResponse.md)
+ - [NetworkExecutor](docs/NetworkExecutor.md)
+ - [Skill](docs/Skill.md)
+ - [SkillHelp](docs/SkillHelp.md)
+ - [SkillParameter](docs/SkillParameter.md)
+ - [SkillResponseFailure](docs/SkillResponseFailure.md)
+ - [SkillResponseSuccess](docs/SkillResponseSuccess.md)
 
 
 ## Documentation For Authorization

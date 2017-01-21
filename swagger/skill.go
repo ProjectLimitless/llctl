@@ -22,23 +22,25 @@
 
 package swagger
 
-import (
-	"time"
-)
+type Skill struct {
 
-type BaseUser struct {
+	UUID string `json:"uUID,omitempty"`
 
-	ID int32 `json:"iD,omitempty"`
+	Name string `json:"name,omitempty"`
 
-	Username string `json:"username,omitempty"`
+	ShortDescription string `json:"shortDescription,omitempty"`
 
-	Password string `json:"password,omitempty"`
+	Author string `json:"author,omitempty"`
 
-	FirstName string `json:"firstName,omitempty"`
+	Help SkillHelp `json:"help,omitempty"`
 
-	LastName string `json:"lastName,omitempty"`
+	Locations []string `json:"locations,omitempty"`
 
-	DateCreated time.Time `json:"dateCreated,omitempty"`
+	Intent Intent `json:"intent,omitempty"`
 
-	IsDeleted bool `json:"isDeleted,omitempty"`
+	RequiredParameters []SkillParameter `json:"requiredParameters,omitempty"`
+
+	Binding string `json:"binding,omitempty"`
+
+	Executor NetworkExecutor `json:"executor,omitempty"`
 }

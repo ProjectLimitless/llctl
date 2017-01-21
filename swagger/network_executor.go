@@ -22,23 +22,9 @@
 
 package swagger
 
-import (
-	"time"
-)
+type NetworkExecutor struct {
 
-type BaseUser struct {
+	Url string `json:"url,omitempty"`
 
-	ID int32 `json:"iD,omitempty"`
-
-	Username string `json:"username,omitempty"`
-
-	Password string `json:"password,omitempty"`
-
-	FirstName string `json:"firstName,omitempty"`
-
-	LastName string `json:"lastName,omitempty"`
-
-	DateCreated time.Time `json:"dateCreated,omitempty"`
-
-	IsDeleted bool `json:"isDeleted,omitempty"`
+	ValidateCertificate bool `json:"validateCertificate,omitempty"`
 }

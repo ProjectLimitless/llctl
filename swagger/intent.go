@@ -22,23 +22,9 @@
 
 package swagger
 
-import (
-	"time"
-)
+type Intent struct {
 
-type BaseUser struct {
+	Actions []string `json:"actions,omitempty"`
 
-	ID int32 `json:"iD,omitempty"`
-
-	Username string `json:"username,omitempty"`
-
-	Password string `json:"password,omitempty"`
-
-	FirstName string `json:"firstName,omitempty"`
-
-	LastName string `json:"lastName,omitempty"`
-
-	DateCreated time.Time `json:"dateCreated,omitempty"`
-
-	IsDeleted bool `json:"isDeleted,omitempty"`
+	Targets []string `json:"targets,omitempty"`
 }
