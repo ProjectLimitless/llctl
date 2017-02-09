@@ -12,9 +12,12 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 
+	"github.com/ProjectLimitless/llctl/swagger"
 	"github.com/spf13/cobra"
 )
 
@@ -43,8 +46,23 @@ Skill JSON registration info to the Limitless API.`,
 			return
 		}
 
-		_ = fileBytes
-		// TODO: Unmarshal into Skill?
+		var skill swagger.Skill
+		err = json.Unmarshal(fileBytes, &skill)
+		if err != nil {
+			logger.Errorf("The given file does not contain a valid skill: %s", err.Error())
+			return
+		}
+
+		registrationDetails, response, err := api.SkillsPost(skill)
+		if err != nil {
+			logger.Errorf("Unable to register skill: %s", err.Error())
+			return
+		}
+		if registrationDetails.Registered == false {
+			logger.Error("Unable to register skill, see response dump below")
+			fmt.Println(prettyJSON(response.Payload))
+			return
+		}
 
 	},
 }

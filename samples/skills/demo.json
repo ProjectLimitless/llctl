@@ -1,0 +1,37 @@
+{
+    "UUID":"sample-coffee",
+    "Name":"Coffee Brewer",
+    "ShortDescription":"A skill to make coffee using a standard kettle",
+    "Author":"Project Limitless Sample",
+    "Help":{
+        "Phrase":"make coffee",
+        "ExamplePhrase":"Make me a cup of coffee"
+    },
+    "Locations":[
+        "kitchen",
+        "downstairs"
+    ],
+    "Intent":{
+        "Actions":[
+            "brew",
+            "make"
+        ],
+        "Targets":[
+            "coffee",
+            "cuppa"
+        ]
+    },
+    "Parameters":[
+        {
+            "Parameter":"sugar",
+            "Type":"int",
+            "IsRequired":true
+        }
+    ],
+    "Binding":"Network",
+    "Executor":{
+        "Url":"https://www.google.com",
+        "ValidateCertificate":false
+    },
+    "PrivateKey":""
+}
