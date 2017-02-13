@@ -360,7 +360,7 @@ func (a DefaultApi) SkillsGet() ([]Skill, *APIResponse, error) {
  * @param id The Skill&#39;s registered UUID
  * @return void
  */
-func (a DefaultApi) SkillsIdDelete(id int32) (*APIResponse, error) {
+func (a DefaultApi) SkillsIdDelete(id string) (*APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Delete")
 	// create path and map variables

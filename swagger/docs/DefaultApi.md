@@ -146,7 +146,7 @@ Deregister a previously registered skill
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int32**| The Skill&#39;s registered UUID | 
+ **id** | **string**| The Skill&#39;s registered UUID | 
 
 ### Return type
 

@@ -11,11 +11,7 @@
 
 package cmd
 
-import (
-	"fmt"
-
-	"github.com/spf13/cobra"
-)
+import "github.com/spf13/cobra"
 
 // skillCmd represents the skill command
 var skillCmd = &cobra.Command{
@@ -25,7 +21,6 @@ var skillCmd = &cobra.Command{
 be added to Project Limitless.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: Work your own magic here
-		fmt.Println("skill called")
 	},
 }
 

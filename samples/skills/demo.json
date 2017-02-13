@@ -32,6 +32,5 @@
     "Executor":{
         "Url":"https://www.google.com",
         "ValidateCertificate":false
-    },
-    "PrivateKey":""
+    }
 }

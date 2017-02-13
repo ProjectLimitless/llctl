@@ -30,7 +30,6 @@ var registerCmd = &cobra.Command{
 	Long: `Registers a new skill by sending the
 Skill JSON registration info to the Limitless API.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Work your own magic here
 		if skillFilename == "" {
 			logger.Error("You must provide a path to a Skill JSON file")
 			return
@@ -55,7 +54,7 @@ Skill JSON registration info to the Limitless API.`,
 
 		registrationDetails, response, err := api.SkillsPost(skill)
 		if err != nil {
-			logger.Errorf("Unable to register skill: %s", err.Error())
+			handleErrorResponse(response)
 			return
 		}
 		if registrationDetails.Registered == false {
@@ -63,6 +62,10 @@ Skill JSON registration info to the Limitless API.`,
 			fmt.Println(prettyJSON(response.Payload))
 			return
 		}
+		fmt.Println(response)
+		fmt.Println("ass")
+
+		fmt.Println(prettyJSON(response.Payload))
 
 	},
 }
