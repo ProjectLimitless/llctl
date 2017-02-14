@@ -13,6 +13,12 @@ package cmd
 
 import "github.com/spf13/cobra"
 
+// The host for the skill server
+var host string
+
+// The filename of the skill JSON file to register
+var skillFilename string
+
 // skillCmd represents the skill command
 var skillCmd = &cobra.Command{
 	Use:   "skill",
@@ -26,15 +32,4 @@ be added to Project Limitless.`,
 
 func init() {
 	RootCmd.AddCommand(skillCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// skillCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// skillCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
 }

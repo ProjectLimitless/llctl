@@ -21,8 +21,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var skillFilename string
-
 // registerCmd represents the register command
 var registerCmd = &cobra.Command{
 	Use:   "register",
@@ -62,11 +60,7 @@ Skill JSON registration info to the Limitless API.`,
 			fmt.Println(prettyJSON(response.Payload))
 			return
 		}
-		fmt.Println(response)
-		fmt.Println("ass")
-
-		fmt.Println(prettyJSON(response.Payload))
-
+		logger.Infof("Skill '%s' has been registered", registrationDetails.UUID)
 	},
 }
 
