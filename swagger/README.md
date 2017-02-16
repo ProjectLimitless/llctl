@@ -42,6 +42,7 @@ Class | Method | HTTP request | Description
  - [NetworkExecutor](docs/NetworkExecutor.md)
  - [Skill](docs/Skill.md)
  - [SkillHelp](docs/SkillHelp.md)
+ - [SkillNetworkExecutorPayload](docs/SkillNetworkExecutorPayload.md)
  - [SkillParameter](docs/SkillParameter.md)
  - [SkillResponseFailure](docs/SkillResponseFailure.md)
  - [SkillResponseSuccess](docs/SkillResponseSuccess.md)

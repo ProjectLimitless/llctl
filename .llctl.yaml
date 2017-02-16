@@ -1,7 +1,8 @@
 debug: true
 api:
     #endpoint: http://127.0.0.1:8762/api
-    endpoint: http://127.0.0.1:8080/api
+    #endpoint: http://127.0.0.1:8080/api
+    endpoint: http://192.168.1.5:8888/api
 
 skills:
-    emulateHost: http://127.0.0.1:9000
+    emulateHost: 192.168.1.6:9001

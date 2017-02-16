@@ -39,14 +39,16 @@ Skill JSON registration info to the Limitless API.`,
 
 		fileBytes, err := ioutil.ReadFile(skillFilename)
 		if err != nil {
-			logger.Error("Unable to read Skill JSON file '%s': %s", skillFilename, err.Error())
+			logger.Error("Unable to read Skill JSON file '%s': %s",
+				skillFilename, err.Error())
 			return
 		}
 
 		var skill swagger.Skill
 		err = json.Unmarshal(fileBytes, &skill)
 		if err != nil {
-			logger.Errorf("The given file does not contain a valid skill: %s", err.Error())
+			logger.Errorf("The given file does not contain a valid skill: %s",
+				err.Error())
 			return
 		}
 
@@ -66,5 +68,6 @@ Skill JSON registration info to the Limitless API.`,
 
 func init() {
 	skillCmd.AddCommand(registerCmd)
-	registerCmd.Flags().StringVarP(&skillFilename, "filename", "f", "", "The Skill JSON file to register")
+	registerCmd.Flags().StringVarP(&skillFilename, "filename", "f", "",
+		"The Skill JSON file to register")
 }

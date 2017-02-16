@@ -22,11 +22,11 @@
 
 package swagger
 
-type SkillParameter struct {
+type SkillNetworkExecutorPayload struct {
 
-	Parameter string `json:"parameter,omitempty"`
+	SkillUUID string `json:"SkillUUID,omitempty"`
 
-	Type_ string `json:"type,omitempty"`
+	User BaseUser `json:"User,omitempty"`
 
-	IsRequired bool `json:"isRequired,omitempty"`
+	SkillParameters []SkillParameter `json:"SkillParameters,omitempty"`
 }
