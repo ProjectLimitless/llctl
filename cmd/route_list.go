@@ -1,5 +1,5 @@
 // This file is part of llctl.
-// Copyright © 2016 Donovan Solms.
+// Copyright © 2017 Donovan Solms.
 // Project Limitless
 // https://www.projectlimitless.io
 //
@@ -19,11 +19,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var wide bool
-
-// routesCmd represents the routes command
-var routesCmd = &cobra.Command{
-	Use:   "routes",
+// routesListCmd represents the list command
+var routesListCmd = &cobra.Command{
+	Use:   "list",
 	Short: "Returns a list of available API routes",
 	Long: `Returns a list of available API routes along with the path, description,
 HTTP method and a boolean specifying if authentication is required for the path`,
@@ -51,5 +49,5 @@ HTTP method and a boolean specifying if authentication is required for the path`
 }
 
 func init() {
-	getCmd.AddCommand(routesCmd)
+	routeCmd.AddCommand(routesListCmd)
 }

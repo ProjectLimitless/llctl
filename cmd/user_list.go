@@ -1,5 +1,5 @@
 // This file is part of llctl.
-// Copyright © 2016 Donovan Solms.
+// Copyright © 2017 Donovan Solms.
 // Project Limitless
 // https://www.projectlimitless.io
 //
@@ -19,9 +19,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// usersCmd represents the users command
-var usersCmd = &cobra.Command{
-	Use:   "users",
+// userListCmd represents the list command
+var userListCmd = &cobra.Command{
+	Use:   "list",
 	Short: "Returns a list of registered users",
 	Long: `Returns a list of registered users for this
 Project Limitless installation`,
@@ -56,6 +56,6 @@ Project Limitless installation`,
 }
 
 func init() {
-	getCmd.AddCommand(usersCmd)
-	usersCmd.PersistentFlags().BoolVarP(&wide, "wide", "w", false, "Print more details")
+	userListCmd.PersistentFlags().BoolVarP(&wide, "wide", "w", false, "Print more details")
+	userCmd.AddCommand(userListCmd)
 }

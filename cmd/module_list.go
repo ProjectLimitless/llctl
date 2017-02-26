@@ -1,5 +1,5 @@
 // This file is part of llctl.
-// Copyright © 2016 Donovan Solms.
+// Copyright © 2017 Donovan Solms.
 // Project Limitless
 // https://www.projectlimitless.io
 //
@@ -19,12 +19,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// modulesCmd represents the modules command
-var modulesCmd = &cobra.Command{
-	Use:   "modules",
-	Short: "Returns a list of loaded modules",
-	Long: `Returns a list of loaded moodules along with the description
-and version`,
+// moduleListCmd represents the list of modules command
+var moduleListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "Lists the loaded modules",
+	Long: `Lists the currently loaded modules
+for the given Limitless installation`,
 	Run: func(cmd *cobra.Command, args []string) {
 		modules, response, err := api.AdminModulesGet()
 		if err != nil {
@@ -56,6 +56,6 @@ and version`,
 }
 
 func init() {
-	getCmd.AddCommand(modulesCmd)
-	modulesCmd.PersistentFlags().BoolVarP(&wide, "wide", "w", false, "Print more details")
+	moduleListCmd.PersistentFlags().BoolVarP(&wide, "wide", "w", false, "Print more details")
+	moduleCmd.AddCommand(moduleListCmd)
 }

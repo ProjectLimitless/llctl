@@ -13,22 +13,16 @@ package cmd
 
 import "github.com/spf13/cobra"
 
-// The host for the skill server
-var host string
-
-// The filename of the skill JSON file to register
-var skillFilename string
-
-// skillCmd represents the skill command
-var skillCmd = &cobra.Command{
-	Use:   "skill",
-	Short: "Perform operations on skills",
-	Long: `Skills are new functionality that can
-be added to Project Limitless.`,
+// userCmd represents the user command
+var userCmd = &cobra.Command{
+	Use:   "user",
+	Short: "Perform operations on users",
+	Long: `Users are allowed to access and
+interact with the Limitless installation`,
 	Run: func(cmd *cobra.Command, args []string) {
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(skillCmd)
+	RootCmd.AddCommand(userCmd)
 }

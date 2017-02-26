@@ -1,5 +1,5 @@
 // This file is part of llctl.
-// Copyright © 2016 Donovan Solms.
+// Copyright © 2017 Donovan Solms.
 // Project Limitless
 // https://www.projectlimitless.io
 //
@@ -13,18 +13,16 @@ package cmd
 
 import "github.com/spf13/cobra"
 
-// getCmd represents the get command
-var getCmd = &cobra.Command{
-	Use:   "get",
-	Short: "Gets API objects",
-	Long: `Get returns API objects and displays them as a list.
-
-The command following 'get' specifies the object to fetch.`,
+// routeCmd represents the route command
+var routeCmd = &cobra.Command{
+	Use:   "route",
+	Short: "Perform operations on API routes",
+	Long: `Routes are API endpoint exposed by
+Limitless and the loaded modules.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.Errorf("You need to specify an API object to get. See `%s --help`", RootCmd.Use)
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(getCmd)
+	RootCmd.AddCommand(routeCmd)
 }

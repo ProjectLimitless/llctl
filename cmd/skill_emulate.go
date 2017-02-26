@@ -81,7 +81,7 @@ Limitless, then shuts down.`,
 		if registrationDetails.Registered == false {
 			logger.Error("Unable to register skill, see response dump below")
 			fmt.Println(prettyJSON(response.Payload))
-			//return
+			return
 		}
 		logger.Infof("Skill '%s' has been registered", registrationDetails.UUID)
 

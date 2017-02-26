@@ -36,6 +36,10 @@ var logger *logging.Logger
 var cacheFile string
 var user swagger.LoginResponse
 
+// Commonly used flags
+// wide allowed wider printing of tables.
+var wide bool
+
 // buildVersion is the version of the 'llctl'
 // tool which is updated by automated builds.
 var buildVersion string
