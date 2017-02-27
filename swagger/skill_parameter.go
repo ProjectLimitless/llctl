@@ -26,7 +26,7 @@ type SkillParameter struct {
 
 	Parameter string `json:"parameter,omitempty"`
 
-	Type_ string `json:"type,omitempty"`
+	ClassType string `json:"classType,omitempty"`
 
 	IsRequired bool `json:"isRequired,omitempty"`
 }

@@ -11,7 +11,11 @@
 
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 // The host for the skill server
 var host string
@@ -26,6 +30,7 @@ var skillCmd = &cobra.Command{
 	Long: `Skills are new functionality that can
 be added to Project Limitless.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("You need to select an operation. See -h for help.")
 	},
 }
 

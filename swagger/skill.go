@@ -32,13 +32,15 @@ type Skill struct {
 
 	Author string `json:"author,omitempty"`
 
+	Class string `json:"class,omitempty"`
+
 	Help SkillHelp `json:"help,omitempty"`
 
-	Locations []string `json:"locations,omitempty"`
+	InstalledLocations []string `json:"installedLocations,omitempty"`
 
 	Intent Intent `json:"intent,omitempty"`
 
-	RequiredParameters []SkillParameter `json:"requiredParameters,omitempty"`
+	Parameters []SkillParameter `json:"parameters,omitempty"`
 
 	Binding string `json:"binding,omitempty"`
 

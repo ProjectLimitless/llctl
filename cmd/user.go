@@ -11,7 +11,11 @@
 
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 // userCmd represents the user command
 var userCmd = &cobra.Command{
@@ -20,6 +24,7 @@ var userCmd = &cobra.Command{
 	Long: `Users are allowed to access and
 interact with the Limitless installation`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("You need to select an operation. See -h for help.")
 	},
 }
 

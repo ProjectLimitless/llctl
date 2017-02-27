@@ -3,11 +3,12 @@
     "Name":"Coffee Brewer",
     "ShortDescription":"A skill to make coffee using a standard kettle",
     "Author":"Project Limitless Sample",
+    "Class": "actions/coffee",
     "Help":{
         "Phrase":"make coffee",
         "ExamplePhrase":"Make me a cup of coffee"
     },
-    "Locations":[
+    "InstalledLocations":[
         "kitchen",
         "downstairs"
     ],
@@ -24,7 +25,7 @@
     "Parameters":[
         {
             "Parameter":"sugar",
-            "Type":"int",
+            "ClassType":"quantity",
             "IsRequired":true
         }
     ],

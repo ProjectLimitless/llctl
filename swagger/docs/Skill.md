@@ -7,10 +7,11 @@ Name | Type | Description | Notes
 **Name** | **string** |  | [optional] [default to null]
 **ShortDescription** | **string** |  | [optional] [default to null]
 **Author** | **string** |  | [optional] [default to null]
+**Class** | **string** |  | [optional] [default to null]
 **Help** | [**SkillHelp**](SkillHelp.md) |  | [optional] [default to null]
-**Locations** | **[]string** |  | [optional] [default to null]
+**InstalledLocations** | **[]string** |  | [optional] [default to null]
 **Intent** | [**Intent**](Intent.md) |  | [optional] [default to null]
-**RequiredParameters** | [**[]SkillParameter**](SkillParameter.md) |  | [optional] [default to null]
+**Parameters** | [**[]SkillParameter**](SkillParameter.md) |  | [optional] [default to null]
 **Binding** | **string** |  | [optional] [default to null]
 **Executor** | [**NetworkExecutor**](NetworkExecutor.md) |  | [optional] [default to null]
 

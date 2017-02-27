@@ -11,7 +11,11 @@
 
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 // routeCmd represents the route command
 var routeCmd = &cobra.Command{
@@ -20,6 +24,7 @@ var routeCmd = &cobra.Command{
 	Long: `Routes are API endpoint exposed by
 Limitless and the loaded modules.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("You need to select an operation. See -h for help.")
 	},
 }
 

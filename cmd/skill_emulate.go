@@ -12,6 +12,7 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -101,18 +102,27 @@ Limitless, then shuts down.`,
 				return
 			}
 
-			decoder := json.NewDecoder(req.Body)
+			// Read the request body and save it, it's only available once
+			payloadBytes, err := ioutil.ReadAll(req.Body)
+			if err != nil {
+				logger.Error("Unable to read request body: '%s'", err.Error())
+			}
+			decoder := json.NewDecoder(bytes.NewBuffer(payloadBytes))
 			var payload swagger.SkillNetworkExecutorPayload
-			err := decoder.Decode(&payload)
+			err = decoder.Decode(&payload)
 			if err != nil {
 				logger.Errorf("Unable to parse NetworkExecutorPayload: %s", err.Error())
 				return
 			}
 			defer req.Body.Close()
 
+			if isDebug {
+				fmt.Println(prettyJSON(payloadBytes))
+			}
+
 			logger.Infof("Received Skill Executor Call for skill '%s'", payload.SkillUUID)
 
-			response := "Yes"
+			response := "Yes I will"
 			logger.Infof("Responded with '%s'", response)
 
 			w.Header().Set("Content-Type", "text/plain")

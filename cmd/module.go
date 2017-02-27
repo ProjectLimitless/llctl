@@ -11,7 +11,11 @@
 
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 // moduleCmd represents the modules command
 var moduleCmd = &cobra.Command{
@@ -20,6 +24,7 @@ var moduleCmd = &cobra.Command{
 	Long: `Modules are binary loaded libraries
 that the Limitless core uses.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("You need to select an operation. See -h for help.")
 	},
 }
 
